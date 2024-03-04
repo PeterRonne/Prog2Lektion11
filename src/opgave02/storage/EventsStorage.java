@@ -16,7 +16,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventsStorage {
+public class EventsStorage implements Storage {
+    @Override
     public List<Tag> getTags() {
         try {
             HttpRequest request = HttpRequest.newBuilder()
@@ -41,6 +42,7 @@ public class EventsStorage {
         return new ArrayList<Tag>();
     }
 
+    @Override
     public List<Event> getEvents(String tag) {
         List<Event> events = null;
         try {

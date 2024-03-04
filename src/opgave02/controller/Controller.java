@@ -2,14 +2,20 @@ package opgave02.controller;
 
 import opgave02.models.Event;
 import opgave02.models.Tag;
+import opgave02.storage.Storage;
 import opgave02.storage.EventsStorage;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
-    private EventsStorage eventsStorage = new EventsStorage();
+
+    private Storage eventsStorage;
     private List<Event> events = new ArrayList<>();
+
+    public Controller(Storage eventsStorage) {
+        this.eventsStorage = eventsStorage;
+    }
 
     public void fetchEvents(Tag tag) {
         events = eventsStorage.getEvents(tag.toString());
@@ -20,6 +26,12 @@ public class Controller {
     }
 
     public List<Event> organizedBy(String email) {
-        return new ArrayList<>();
+        List<Event> organizedEvents = new ArrayList<>();
+        for (Event event : events) {
+            if (event.getOrganizer().getEmail().equals(email)) {
+                organizedEvents.add(event);
+            }
+        }
+        return organizedEvents;
     }
 }

@@ -10,5 +10,13 @@
   {
     "name": "Peter Bertelsen",
     "role": "TEACHER"
+  },
+  {
+    "name": "Peter",
+    "role": "STUDENT"
+  },
+  {
+    "name": "Rasmus",
+    "role": "STUDENT"
   }
 ]

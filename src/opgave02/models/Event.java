@@ -10,6 +10,32 @@ public class Event {
     private String description;
     private String image;
 
+
+    public Event(String name, Organizer organizer) {
+        this.name = name;
+        this.organizer = organizer;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Organizer getOrganizer() {
+        return organizer;
+    }
+
+    public List<Occurrence> getOccurrences() {
+        return occurrences;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
     @Override
     public String toString() {
         return "Event{" +
