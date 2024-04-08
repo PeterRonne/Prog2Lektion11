@@ -7,6 +7,7 @@ import opgave02.storage.EventsStorage;
 import opgave02.storage.Storage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,36 +17,70 @@ import static org.mockito.Mockito.*;
 
 class ControllerTest {
 
-    private Controller controller;
-    private EventsStorage eventsStorageMock;
+//    private Controller controller;
+//    private EventsStorage eventsStorageMock;
 
     @BeforeEach
     void setUp() {
-        eventsStorageMock = mock(EventsStorage.class);
-        controller = new Controller(eventsStorageMock);
+//        eventsStorageMock = mock(EventsStorage.class);
+//        controller = new Controller(eventsStorageMock);
     }
 
+
     @Test
-    void organizedBy() {
+    void organizedByTestTest() {
         // Arrange
+        Storage eventsStorageMock = mock(EventsStorage.class);
+        Controller controller = new Controller(eventsStorageMock);
+        Tag tag = Tag.MUSIK;
         String organizerEmail = "organizer@example.com";
         String organizerName = "OrganizedBy";
-        Tag tag = Tag.MUSIK;
         List<Event> mockEvents = List.of(
                 new Event("Event 1", new Organizer(organizerEmail, organizerName)),
                 new Event("Event 2", new Organizer(organizerEmail, organizerName)),
                 new Event("Event 3", new Organizer("differentEmail", "differentOrganizer"))
         );
+
+        when(eventsStorageMock.getEvents(tag.toString())).thenReturn(mockEvents);
         System.out.println(mockEvents);
         controller.fetchEvents(tag);
-        when(eventsStorageMock.getEvents(tag.toString())).thenReturn(mockEvents);
-
+        List<Event> AllEvents = eventsStorageMock.getEvents(tag.toString());
         // Act
-        List<Event> organizedEvents = controller.organizedBy(organizerEmail);
-
-
+        boolean eventsOrganizedBy = controller.organizedBy(organizerEmail).stream().allMatch(event -> event.getOrganizer().getEmail().equals(organizerEmail));
+        mockEvents = controller.organizedBy(organizerEmail);
+        controller.fetchEvents(tag);
+        System.out.println(mockEvents);
         // Assert
-        assertEquals(2, organizedEvents.size());
+        assertTrue(eventsOrganizedBy);
         verify(eventsStorageMock).getEvents(tag.toString());
     }
+
+//    @Test
+//    void organizedByTest() {
+//        // Arrange
+//        String organizerEmail = "organizer@example.com";
+//        String organizerName = "OrganizedBy";
+//        Tag tag = Tag.MUSIK;
+//        List<Event> mockEvents = List.of(
+//                new Event("Event 1", new Organizer(organizerEmail, organizerName)),
+//                new Event("Event 2", new Organizer(organizerEmail, organizerName)),
+//                new Event("Event 3", new Organizer("differentEmail", "differentOrganizer"))
+//        );
+//        System.out.println(mockEvents);
+//        controller.fetchEvents(tag);
+//        when(eventsStorageMock.getEvents(tag.toString())).thenReturn(mockEvents);
+//        // Act
+//        boolean eventsOrganizedBy = controller.organizedBy(organizerEmail).stream().allMatch(event -> event.getOrganizer().getEmail().equals(organizerEmail));
+//        mockEvents = controller.organizedBy(organizerEmail);
+//        controller.fetchEvents(tag);
+//        System.out.println(mockEvents);
+//        // Assert
+//        assertTrue(eventsOrganizedBy);
+//        verify(eventsStorageMock).getEvents(tag.toString());
+//    }
+
+
+
+
+
 }

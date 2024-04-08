@@ -18,5 +18,9 @@
   {
     "name": "Rasmus",
     "role": "STUDENT"
+  },
+  {
+    "name": "Hanne",
+    "role": "TEACHER"
   }
 ]
